@@ -1,0 +1,153 @@
+template(name='admin_staff')
+	.admin_staff
+		.filters
+			a#filter_all.filter_all.waves-effect.waves-light.btn
+				i.fa.fa-asterisk  全部
+			a#filter_waiter.filter.waves-effect.waves-light.btn-flat
+				i.fa.fa-user-o  服务员
+			a#filter_cashier.filter.waves-effect.waves-light.btn-flat
+				i.fa.fa-user-circle-o  收银员
+			a#filter_admin.filter.waves-effect.waves-light.btn-flat
+				i.fa.fa-user-circle  管理员
+		.staffs
+			.row
+				each staff
+					.staff.col.s12.m4(class="{{join roles}}")
+						.actions
+							a.btn-floating.waves-effect.waves-light.remove_user_button
+								i.material-icons remove
+							a.btn-floating.waves-effect.waves-light.set_user_password_button
+								i.material-icons security
+						.card
+							.card-content
+								.row
+									.section
+									.valign-wrapper
+										.col.s2.valign
+											i.fa.fa-id-badge.large
+										.col.s4.valign
+											input(value='#{username}', disabled)
+										.col.s2.valign
+											i.fa.fa-address-card-o.large
+										.col.s4.valign
+											input.new_name(value='#{profile.name}')
+									.valign-wrapper
+										.col.s2.valign
+											i.fa.fa-phone.large
+										.col.s10.valign
+											input.new_phone(value='#{profile.phone}')
+								.section
+								.row
+									if $inArray 'waiter' roles
+										.chip
+											a.remove_role_waiter(href='#')
+												i.fa.fa-user-o
+												|  服务员
+									else
+										.chip.transparent
+											a.add_role_waiter(href='#')
+												i.fa.fa-user-o
+												|  服务员
+									if $inArray 'cashier' roles
+										.chip
+											a.remove_role_cashier(href='#')
+												i.fa.fa-user-circle-o
+												|  收银员
+									else
+										.chip.transparent
+											a.add_role_cashier(href='#')
+												i.fa.fa-user-circle-o
+												|  收银员
+									if $inArray 'admin' roles
+										.chip
+											a.remove_role_admin(href='#')
+												i.fa.fa-user-circle
+												|  管理员
+									else
+										.chip.transparent
+											a.add_role_admin(href='#')
+												i.fa.fa-user-circle
+												|  管理员
+								span.card-title.activator.grey-text.text-darken-4
+									i.material-icons.right more_vert
+							.card-reveal
+								span.card-title.grey-text.text-darken-4
+									| 统计评分等功能待加入。
+									i.material-icons.right close
+
+		.fixed-action-btn
+			a.btn-floating.btn-large.red
+				i.material-icons mode_edit
+			ul
+				li
+					a#add_staff_modal_pop.btn-floating.red.lighten-2
+						i.material-icons person_add
+				li
+					a.btn-floating.red.lighten-1
+						i.material-icons group_add
+
+		#add_staff_modal.modal.bottom-sheet
+			.modal-content
+				.section
+				.container
+					h4 加入工作人员
+					.section
+					.row
+						.col.s12.m5
+							p 基础资料
+							.row
+								.col.s6
+									.input-field
+										input#id(type='number')
+										label 序号 *
+								.col.s6
+									.input-field
+										input#name(type='text')
+										label 姓名
+								.col.s12
+									.input-field
+										input#phone(type='text')
+										label 电话
+						.col.s12.m5.offset-m2
+							p 职位
+							.row
+								.col.s12
+									p
+										input#role_waiter(type='checkbox')
+										label(for='role_waiter') 服务人员
+								.col.s12
+									p
+										input#role_cashier(type='checkbox')
+										label(for='role_cashier') 吧台收银员
+								.col.s12
+									p
+										input#role_admin(type='checkbox')
+										label(for='role_admin') 管理员
+					small * 为必填项目，资料信息在加入后依旧可以被更改。
+						| <br>
+						| 序号作为用户的登陆ID与初始密码，可在稍后修改。
+						| <br>
+						| 给予管理员权限可能会危害系统与资料的安全！
+			.modal-footer
+				a#add_staff.waves-effect.waves-teal.btn-flat 提交
+					i.fa.fa-check
+				a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href='#!') 取消
+					i.fa.fa-times
+
+		#remove_user_modal.modal.bottom-sheet
+			.modal-content
+				.row
+					.col.s6
+						a.modal-action.modal-close.waves-effect.waves-light.grey.btn-large 取消
+					.col.s6
+						a#remove_user.waves-effect.waves-light.red.btn-large 确认删除
+		
+		#set_user_password_modal.modal.bottom-sheet
+			.modal-content
+				.row
+					.col.s3
+						a.modal-action.modal-close.waves-effect.waves-light.grey.btn-large 取消
+					.col.s6
+						input#user_new_password(placeholder='请输入新密码...')
+					.col.s3
+						a#set_user_password.waves-effect.waves-light.red.btn-large 确认设定

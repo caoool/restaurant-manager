@@ -1,0 +1,71 @@
+template(name='admin_layout')
+	.admin_layout
+		.navbar-fixed
+			nav.nav-extended
+				.nav-wrapper
+					a.brand-logo(href='#')
+						img.responsive-img(src='../logo.png')
+						| | 餐饮管理
+					a.button-collapse(href='#', data-activates='mobile')
+						i.material-icons menu
+					ul.right.hide-on-med-and-down
+						li
+							a#password_modal_pop.waves-effect.waves-light.btn {{currentUser.username}}
+						li
+							a#logout(href='#')
+								i.fa.fa-sign-out
+					ul#mobile.side-nav
+						li
+							a#password_modal_pop.waves-effect.waves-light.btn {{currentUser.username}}
+						li
+							a#logout(href='#')
+								i.fa.fa-sign-out
+				.nav-content
+					ul.tabs.tabs-transparent
+						li.tab
+							if $.Session.equals 'SELECTED_TAB' 'dishes'
+								a#dishes.active(href='#') 菜品
+							else
+								a#dishes(href='#') 菜品
+						li.tab
+							if $.Session.equals 'SELECTED_TAB' 'tables'
+								a#tables.active(href='#') 台面
+							else
+								a#tables(href='#') 台面
+						li.tab
+							if $.Session.equals 'SELECTED_TAB' 'staff'
+								a#staff.active(href='#') 人员
+							else
+								a#staff(href='#') 人员
+						li.tab
+							if $.Session.equals 'SELECTED_TAB' 'settings'
+								a#settings.active(href='#')
+									i.fa.fa-cog.fa-lg
+							else
+								a#settings(href='#')
+									i.fa.fa-cog.fa-lg
+
+		.panel
+			+yield
+
+		#password_modal.modal
+			.modal-content
+				.section
+				.container
+					h4 修改密码
+					p.small 初始密码为 admin，请尽快修改！
+					.section
+						.input-field
+							input#password_old(type='password')
+							label 初始密码
+						.input-field
+							input#password_new(type='password')
+							label 新密码
+						.input-field
+							input#password_validate(type='password')
+							label 再次输入
+			.modal-footer
+				a#change_password.waves-effect.waves-teal.btn-flat 提交
+					i.fa.fa-check
+				a.modal-action.modal-close.waves-effect.btn-flat 取消
+					i.fa.fa-times

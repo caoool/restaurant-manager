@@ -1,0 +1,33 @@
+template(name='login')
+	.login
+		center
+			.section
+			.section
+			img.responsive-img(style='width: 250px;', src='logo.png')
+			.section
+			.section
+			.container
+				.z-depth-1.grey.lighten-4.row(style='display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;')
+					form.col.s12
+						.row
+							.col.s12
+						.row
+							.input-field.col.s12
+								input#username(type='text')
+								label(for='username') 请输入登入名
+						.row
+							.input-field.col.s12
+								input#password(type='password')
+								label(for='password') 请输入密码
+							label(style='float: right;')
+								a.grey-text(href='#!')
+									b 忘记密码？
+						br
+						center
+							.row
+								button#waiter_login.col.s12.btn.btn-large.waves-effect.amber 开始享用
+									i.fa.fa-cutlery(aria-hidden='true')
+							.row
+								button#cashier_login.col.s5.btn.btn-large.waves-effect.indigo.lighten-1 吧台登入
+								p.col.s2
+								button#admin_login.col.s5.btn.btn-large.waves-effect.grey.lighten-1 管理员登入

@@ -35,8 +35,8 @@ reywood:publish-composite
 aldeed:simple-schema
 aldeed:collection2
 dburles:collection-helpers
-# dburles:factory
-# digilord:faker
+dburles:factory
+digilord:faker
 
 # Accounts
 alanning:roles
@@ -45,12 +45,15 @@ accounts-password
 # Frontend
 iron:router
 raix:handlebar-helpers
-fortawesome:fontawesome
-twbs:bootstrap
-# materialize:materialize
 mquandalle:jade
 stylus
 less
 udondan:yml
+fourseven:scss
+poetic:materialize-scss
+# zodiase:material-design-icons-fonts
+fortawesome:fontawesome
+isotope:isotope
 session
 u2622:persistent-session
+
