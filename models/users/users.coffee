@@ -27,3 +27,11 @@ Schema.User = new SimpleSchema
     type: String
 
 Meteor.users.attachSchema Schema.User
+
+Meteor.users.publicFields =
+  id: 1
+  username: 1
+  profile: 1
+  roles: 1
+
+Tables.helpers

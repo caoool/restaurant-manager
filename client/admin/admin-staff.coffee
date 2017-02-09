@@ -19,7 +19,7 @@ Template.admin_staff.onRendered ->
 	filters.push $('.admin_staff #filter_admin')
 	filter = new Set
 	delay '500', ->
-		$('.staffs').isotope
+		$('.admin_staff .staffs').isotope
 			itemSelector: '.staff'
 			layoutMode: 'masonry'
 

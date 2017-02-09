@@ -1,2 +1,29 @@
 template(name='admin_tables')
-	h1 tables
+	.admin_tables
+		.tables
+			.row
+				each tables
+					.table.col.s12.m6.l4
+						.actions
+							a.btn-floating.waves-effect.waves-light.remove_table
+								i.material-icons remove
+						.card
+							.card-content
+								.row
+									.section
+									.valign-wrapper
+										.col.s2.valign
+											i.fa.fa-th-large.large
+										.col.s10.valign
+											input.change_table_id(value='#{id}')
+								.section
+								span.card-title.activator.grey-text.text-darken-4
+									i.material-icons.right more_vert
+							.card-reveal
+								span.card-title.grey-text.text-darken-4
+									| 统计等功能待加入。
+									i.material-icons.right close
+
+		.fixed-action-btn
+			a#add_table.btn-floating.btn-large.red
+				i.material-icons add
