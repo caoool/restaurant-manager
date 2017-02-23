@@ -1,5 +1,6 @@
 Template.admin_layout.rendered = ->
 	$('.admin_layout ul.tabs').tabs()
+	$('.admin_layout #password_modal').modal()
 
 Template.admin_layout.events
 	'click .admin_layout #logout': (e) ->
@@ -9,7 +10,7 @@ Template.admin_layout.events
 
 	'click .admin_layout #password_modal_pop': (e) ->
 		e.preventDefault()
-		$('.admin_layout #password_modal').openModal()
+		$('.admin_layout #password_modal').modal 'open'
 
 	'click .admin_layout #change_password': (e) ->
 		e.preventDefault()
@@ -24,7 +25,7 @@ Template.admin_layout.events
 					Materialize.toast('初始密码错误!', 3000, 'rounded red lighten-2')
 				else
 					Materialize.toast('密码修改成功！', 3000, 'rounded teal lighten-2')
-					$('.admin_layout #password_modal').closeModal()
+					$('.admin_layout #password_modal').modal 'close'
 
 	'click .admin_layout #dishes': (e) ->
 		e.preventDefault()

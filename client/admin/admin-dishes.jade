@@ -1,2 +1,71 @@
 template(name='admin_dishes')
-	h1 dishes
+	.admin_dishes
+		.filters
+			a#filter_all.filter_all.waves-effect.waves-light.btn
+				i.fa.fa-asterisk  全部
+			each tags
+				a.filter_all.waves-effect.waves-light.btn-flat #{this}
+		.dishes
+			.row
+				each dishes
+					.dish.col.s12.m6.l4(class="{{join this.tags}}")
+						.actions
+							input.new_picture_holder(type='file', name='file', hidden, dishId='#{_id}')
+							a.btn-floating.waves-effect.waves-light.remove_dish_button
+								i.material-icons remove
+						.card
+							.card-image
+								if picture
+									img(src='#{picture}')
+								else
+									img(src='../food-place-holder.jpg')
+								span.card-title
+									a.btn-floating.waves-effect.waves-light.new_picture
+										i.material-icons input
+							.card-content
+								.row
+									.section
+									.valign-wrapper
+										.col.s2.valign
+											p 菜品
+										.col.s6.valign
+											input.new_name(value='#{name}')
+										.col.s4.valign
+											if stock
+												a.btn.in_stock 有
+											else
+												a.btn.grey.out_stock 无
+									.valign-wrapper
+										.col.s2.valign
+											p 单价
+										.col.s4.valign
+											input.new_price(value='#{price}', style='text-align:center;')
+										.col.s2.valign
+											p 单位
+										.col.s4.valign
+											input.new_unit(value='#{unit}', style='text-align:center;')
+									.valign-wrapper
+										.input-field.col.s12.valign
+											textarea.new_description.materialize-textarea.validate #{description}
+											label(for='description') 简介
+								.row
+									.col.s12
+										.tags(dishId='#{_id}')
+								span.card-title.activator.grey-text.text-darken-4
+									i.material-icons.right more_vert
+							.card-reveal
+								span.card-title.grey-text.text-darken-4
+									| 统计评分等功能待加入。
+									i.material-icons.right close
+
+		.fixed-action-btn
+			a#add_dish.btn-floating.btn-large.red
+				i.material-icons mode_edit
+
+		#remove_dish_modal.modal.bottom-sheet
+			.modal-content
+				.row
+					.col.s6
+						a.modal-action.modal-close.waves-effect.waves-light.grey.btn-large 取消
+					.col.s6
+						a#remove_dish.waves-effect.waves-light.red.btn-large 确认删除

@@ -23,7 +23,7 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 #####################################
 
 # Lib
-coffeescript
+coffeescript@1.11.1_4
 
 # Server functions
 4commerce:env-settings
@@ -40,20 +40,19 @@ digilord:faker
 
 # Accounts
 alanning:roles
-accounts-password
+accounts-password@1.3.3
 
 # Frontend
 iron:router
 raix:handlebar-helpers
 mquandalle:jade
-stylus
-less
+stylus@2.513.8
+less@2.7.8
 udondan:yml
-fourseven:scss
-poetic:materialize-scss
-# zodiase:material-design-icons-fonts
+materialize:materialize
+zodiase:material-design-icons-fonts
 fortawesome:fontawesome
 isotope:isotope
-session
+session@1.1.7
 u2622:persistent-session
-
+arboleya:electrify

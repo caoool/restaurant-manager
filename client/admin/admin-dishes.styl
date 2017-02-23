@@ -1,0 +1,110 @@
+.admin_dishes
+	margin-top 40px
+	margin-left 30px
+	margin-right 30px
+
+	.filters
+		position fixed
+		padding 3px 25px
+		z-index 2
+		background-color #f6f6f6
+		border-radius 50px
+		// transform scale(0.6)
+
+		.filter
+			border-radius 50px
+			margin auto
+			transition all .2s ease-in-out
+			margin-right 10px
+
+		.filter:hover
+			transform scale(1.2)
+
+		.filter_all
+			margin auto
+			margin-right 25px
+			transition all .2s ease-in-out
+			border-radius 50px
+			vertical-align center
+
+		.filter_all:hover
+			transform scale(1.2)
+
+	.dishes
+		top 50px
+	
+	.dishes:after
+		content ''
+		display block
+		clear both
+
+	.dish
+		float left
+
+		.actions
+			position relative
+			top 25px
+			left -18px
+
+			a
+				margin-right 0
+				background-color rgba(150, 150, 150, 0.65)
+				transform scale(0.8)
+
+			a:hover
+				transform scale(1.2)
+
+
+	.card
+		// min-height 250px
+		transition all .2s ease-in-out
+
+		.card-image
+			.card-title
+				a
+					left -15px
+					bottom -15px
+					background-color rgba(150, 150, 150, 0.65)
+
+
+		.card-content
+			transition all .2s ease-in-out
+
+			.large
+				font-size 150%
+
+			span
+				position absolute
+				bottom 15px
+				right 15px
+
+			a
+				display block
+				border-radius 100px
+
+			// textarea
+			// 	box-sizing border-box
+			// 	max-height 160px
+			// 	min-height 38px
+			// 	overflow-x hidden
+
+			.chip
+				margin 2px
+				
+				a
+					color black
+
+	.card:hover
+		transform scale(1.05)
+
+		.card-content
+			transform scale(1.1)
+
+	.fixed-action-btn
+		transform scale(1.2)
+
+	#remove_dish_modal
+
+		a
+			border-radius 50px
+			display block

@@ -1,12 +1,3 @@
-delay = (ms, func) -> setTimeout func, ms
-
-setToString = (set) ->
-	ret = ''
-	set.forEach (item) =>
-		ret += item
-		ret += ', '
-	ret.slice 0, -2
-
 filters = []
 filtered = new Set
 
@@ -18,6 +9,9 @@ Template.admin_staff.onRendered ->
 	filters.push $('.admin_staff #filter_cashier')
 	filters.push $('.admin_staff #filter_admin')
 	filter = new Set
+	$('.admin_staff #add_staff_modal').modal()
+	$('.admin_staff #remove_user_modal').modal()
+	$('.admin_staff #set_user_password_modal').modal()
 	delay '500', ->
 		$('.admin_staff .staffs').isotope
 			itemSelector: '.staff'
@@ -116,7 +110,7 @@ Template.admin_staff.events
 
 	'click .admin_staff #add_staff_modal_pop': (e) ->
 		e.preventDefault()
-		$('.admin_staff #add_staff_modal').openModal()
+		$('.admin_staff #add_staff_modal').modal 'open'
 
 	'click .admin_staff #add_staff': (e) ->
 		e.preventDefault()
@@ -136,7 +130,7 @@ Template.admin_staff.events
 			if error
 				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
 			else
-				$('.admin_staff #add_staff_modal').closeModal()
+				$('.admin_staff #add_staff_modal').modal 'close'
 				$('.admin_staff .staffs').isotope('reloadItems').isotope()
 				Materialize.toast('加入新成员成功!', 3000, 'rounded teal lighten-2')
 				
@@ -221,7 +215,7 @@ Template.admin_staff.events
 	'click .admin_staff .remove_user_button': (e) ->
 		e.preventDefault()
 		Session.set 'USER_SELECTED', @_id
-		$('.admin_staff #remove_user_modal').openModal()
+		$('.admin_staff #remove_user_modal').modal 'open'
 
 	'click .admin_staff #remove_user': (e) ->
 		e.preventDefault()
@@ -229,7 +223,7 @@ Template.admin_staff.events
 			if error
 				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
 			else
-				$('.admin_staff #remove_user_modal').closeModal()
+				$('.admin_staff #remove_user_modal').modal 'close'
 				$('.admin_staff .staffs').isotope
 					itemSelector: '.staff'
 					layoutMode: 'masonry'
@@ -238,7 +232,7 @@ Template.admin_staff.events
 	'click .admin_staff .set_user_password_button': (e) ->
 		e.preventDefault()
 		Session.set 'USER_SELECTED', @_id
-		$('.admin_staff #set_user_password_modal').openModal()
+		$('.admin_staff #set_user_password_modal').modal 'open'
 
 	'click .admin_staff #set_user_password': (e) ->
 		e.preventDefault()
@@ -249,7 +243,7 @@ Template.admin_staff.events
 			if error
 				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
 			else
-				$('.admin_staff #set_user_password_modal').closeModal()
+				$('.admin_staff #set_user_password_modal').modal 'close'
 				Materialize.toast('修改成员密码成功!', 3000, 'rounded teal lighten-2')
 						
 Template.admin_staff.helpers
