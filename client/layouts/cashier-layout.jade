@@ -1,0 +1,22 @@
+template(name='cashier_layout')
+  .cashier_layout
+    .navbar-fixed
+      nav.nav-extended
+        .nav-wrapper
+          a.brand-logo(href='#')
+            img.responsive-img(src='../logo.png')
+            | | 收银
+          ul.right.hide-on-med-and-down
+            li
+              a.waves-effect.waves-light.btn {{currentUser.username}}
+            li
+              a#logout(href='#')
+                i.fa.fa-sign-out
+          ul#mobile.side-nav
+            li
+              a.waves-effect.waves-light.btn {{currentUser.username}}
+            li
+              a#logout(href='#')
+                i.fa.fa-sign-out
+    .panel
+      +yield
