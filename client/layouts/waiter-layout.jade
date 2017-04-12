@@ -1,0 +1,41 @@
+template(name='waiter_layout')
+  .waiter_layout
+    .navbar-fixed
+      nav.nav-extended
+        .nav-wrapper
+          a.brand-logo(href='#')
+            img.responsive-img(src='../logo.png')
+            | | 点餐
+          ul.right.hide-on-med-and-down
+            li
+              a#show_table_model.waves-effect.waves-light.btn {{currentUser.username}} | 12
+            li
+              a#check_order.waves-effect.waves-light.btn-large.amber 已点
+            li
+              a#logout(href='#')
+                i.fa.fa-sign-out
+          ul#mobile.side-nav
+            li
+              a#show_table_model.waves-effect.waves-light.btn {{currentUser.username}} | 12
+            li
+              a#check_order.waves-effect.waves-light.btn-large.amber 已点
+            li
+              a#logout(href='#')
+                i.fa.fa-sign-out
+    .panel
+      +yield
+
+    #table_modal.modal.bottom-sheet
+      .modal-content
+        //- small * 灰色为未开台或已被预定，请联系吧台。
+        //- hr
+        each tables
+          if occupied
+            a.waves-effect.waves-light.btn.btn-large #{id}
+          else if reserved
+            a.waves-effect.waves-light.btn.btn-large. #{id}
+          else
+            a.waves-effect.waves-light.btn.btn-large.grey.disabled #{id}
+
+    #order.slide_panel
+      h3 已点菜单

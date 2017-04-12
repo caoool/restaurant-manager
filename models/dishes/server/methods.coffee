@@ -4,7 +4,7 @@ Meteor.methods
 		Dishes.insert options
 
 	'dishes.remove': (_id) ->
-		return if !@userId || !Roles.userIsInRole @userId, 'admin' 
+		return if !@userId || !Roles.userIsInRole @userId, 'admin'
 		Dishes.remove _id: _id
 
 	'dishes.update': (options) ->

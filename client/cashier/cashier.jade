@@ -6,98 +6,88 @@ template(name='cashier')
           .col.s12
             .actions
               .row
-                .col.s8
-                  h4 12
-                    small.left 当前台号:
-                  p 状态： 空闲
-                  p 款项： 未支付
-                  p 人数： 4人
-                  p 其他信息
-                .col.s4
-                  .action-group.right
-                    button.waves-effect.waves-light.btn 预定
-                    button.waves-effect.waves-light.btn 开台
-                    button.waves-effect.waves-light.btn 打印
-                    button.waves-effect.waves-light.btn 结账
+                if table_selected
+                  with table_selected
+                    .col.s8
+                      h4 当前台号: #{id}
+                      if occupied
+                        p 状态： 使用中
+                      else
+                        p 状态： 空闲
+                      p 款项： 未支付
+                      p 人数： 4人
+                      p 其他信息
+                    .col.s4
+                      .action-group.right
+                        if reserved
+                          button.reserve.waves-effect.waves-light.btn.disabled 预定
+                          button.occupy.waves-effect.waves-light.btn(tableName='#{id}') 开台
+                          button.print.waves-effect.waves-light.btn 打印
+                          button.check.waves-effect.waves-light.btn 结账
+                        else if occupied
+                          button.reserve.waves-effect.waves-light.btn.disabled 预定
+                          button.occupy.waves-effect.waves-light.btn.disabled 开台
+                          button.print.waves-effect.waves-light.btn 打印
+                          button.check.waves-effect.waves-light.btn 结账
+                        else
+                          button.reserve.waves-effect.waves-light.btn 预定
+                          button.occupy.waves-effect.waves-light.btn(tableName='#{id}') 开台
+                          button.print.waves-effect.waves-light.btn 打印
+                          button.check.waves-effect.waves-light.btn 结账
+                else
+                  h4 请选择台面
           .col.s12
             .tables
               .row
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat.selected 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
-                .col.s4.center
-                  button.table.waves-effect.waves-light.btn.btn-flat 12
+                each tables
+                  .col.s4.center
+                    if $eq _id tableId_selected
+                      if reserved
+                        button.table.waves-effect.waves-light.btn.btn-flat.selected(tableId='#{_id}') #{id}
+                          i.fa.fa-circle-o-notch
+                      else if occupied
+                        button.table.waves-effect.waves-light.btn.btn-flat.selected(tableId='#{_id}') #{id}
+                          i.fa.fa-cutlery
+                      else
+                        button.table.waves-effect.waves-light.btn.btn-flat.selected(tableId='#{_id}') #{id}
+                    else
+                      if reserved
+                        button.table.waves-effect.waves-light.btn.btn-flat(tableId='#{_id}') #{id}
+                          i.fa.fa-circle-o-notch
+                      else if occupied
+                        button.table.waves-effect.waves-light.btn.btn-flat(tableId='#{_id}') #{id}
+                          i.fa.fa-cutlery
+                      else
+                        button.table.waves-effect.waves-light.btn.btn-flat(tableId='#{_id}') #{id}
       .col.s12.m7
         .order
-          h5.center 循环牛餐厅
-          small.right 时间日期: 2017.3.1 14:35
-          br
-          small.right 台号 #1
-          br
-          small.right 服务员 #123
-          br
-          br
-          table.centered.highlight
-            thead
-              tr
-                th 菜名
-                th 数量
-                th 单价
-            tbody
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td 炒随便什么鸡
-                td 1
-                td 20
-              tr
-                td
-                td
-                td
-              tr
-                td -
-                td -
-                td
-                  h5 总价
-                  hr
-                  h4 300
-                  
+          if order
+            with order
+              h5.right 循环牛餐厅
+              p 台号:  #{tableName}
+              p 服务员:  #123
+              p 时间日期: #{createdAt}
+              .section
+              table.centered.highlight
+                thead
+                  tr
+                    th 菜名
+                    th 数量
+                    th 单价
+                tbody
+                  each dishes
+                    tr
+                      td #{name}
+                      td #{count}
+                      td #{price}
+                  .section
+                  tr
+                    td -
+                    td -
+                    td
+                      h5 总价
+                      hr
+                      h4 #{total}
+          else
+            h4
+              i.fa.fa-smile-o

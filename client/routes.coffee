@@ -24,6 +24,12 @@ Router.route '/login',
 	name: 'login'
 	template: 'login'
 
+Router.route '/waiter',
+	name: 'waiter'
+	template: 'waiter'
+	layoutTemplate: 'waiter_layout'
+	authorizations: ['admin', 'cashier', 'waiter']
+
 Router.route '/cashier',
 	name: 'cashier'
 	template: 'cashier'

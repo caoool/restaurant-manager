@@ -1,0 +1,32 @@
+template(name='waiter')
+  .waiter
+    .filters
+      a#filter_all.filter_all.waves-effect.waves-light.btn
+        i.fa.fa-asterisk  全部
+      each tags
+        a.filter_all.waves-effect.waves-light.btn-flat #{this}
+    .dishes
+      .row
+        each dishes
+          .dish.col.s12.m6.l4(class="{{join this.tags}}")
+            .card
+              .card-image
+                if picture
+                  img(src='#{picture}')
+                else
+                  img(src='../food-place-holder.jpg')
+                span.card-title #{name}
+                if stock
+                  a.btn-floating.halfway-fab.waves-effect.waves-light.btn-large
+                    i.material-icons add
+                else
+                  a.btn-floating.halfway-fab.waves-effect.waves-light.btn-large.grey.disabled
+                    i.material-icons add
+              .card-content
+                p #{description}
+                .section
+                hr
+                p.right #{price} 元 / #{unit}
+                .section
+                each this.tags
+                  .chip #{this}

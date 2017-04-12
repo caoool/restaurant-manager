@@ -19,11 +19,7 @@ Tables.schema = new SimpleSchema
   id:
     type: String
     optional: true
-    autoValue: ->
-      if !@value
-        '未命名'
-      else
-        @value
+    defaultValue: '未命名'
   reserved:
     type: Boolean
     defaultValue: false
