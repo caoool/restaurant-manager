@@ -8,20 +8,14 @@ template(name='waiter_layout')
             | | 点餐
           ul.right.hide-on-med-and-down
             li
-              a#show_table_model.waves-effect.waves-light.btn {{currentUser.username}} | 12
+              a#show_table_model.waves-effect.waves-light.btn #{currentUser.username} | #{table_selected.id}
             li
               a#check_order.waves-effect.waves-light.btn-large.amber 已点
-            li
-              a#logout(href='#')
-                i.fa.fa-sign-out
           ul#mobile.side-nav
             li
-              a#show_table_model.waves-effect.waves-light.btn {{currentUser.username}} | 12
+              a#show_table_model.waves-effect.waves-light.btn #{currentUser.username} | #{table_selected.id}
             li
               a#check_order.waves-effect.waves-light.btn-large.amber 已点
-            li
-              a#logout(href='#')
-                i.fa.fa-sign-out
     .panel
       +yield
 
@@ -31,11 +25,53 @@ template(name='waiter_layout')
         //- hr
         each tables
           if occupied
-            a.waves-effect.waves-light.btn.btn-large #{id}
+            a.select_table.waves-effect.waves-light.btn.btn-large #{id}
+              i.fa.fa-cutlery
           else if reserved
-            a.waves-effect.waves-light.btn.btn-large. #{id}
+            a.select_table.waves-effect.waves-light.btn.btn-large #{id}
+              i.fa.fa-circle-o-notch
           else
             a.waves-effect.waves-light.btn.btn-large.grey.disabled #{id}
+        a#logout.waves-effect.waves-light.btn.btn-large.btn-floating.red(href='#')
+          i.fa.fa-sign-out
 
     #order.slide_panel
-      h3 已点菜单
+      .order
+        if order
+          with order
+            h5.right 循环牛餐厅
+            p 台号:  #{tableName}
+            p 服务员:  #123
+            p 时间日期: #{createdAt}
+            .section
+            table.centered.highlight
+              thead
+                tr
+                  th 菜名
+                  th 数量
+                  th 单价
+              tbody
+                each dishes
+                  tr
+                    td 
+                      a.remove_dish(href='#', dish_name='#{name}', dish_options='#{options}').left x
+                      span #{name}
+                      if options
+                        br
+                        small #{options}
+                    td 
+                      a.remove_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') -
+                      span #{count}
+                      a.add_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') + 
+                    td #{price}
+                .section
+                tr
+                  td -
+                  td -
+                  td
+                    h5 总价
+                    hr
+                    h4 #{total}
+        else
+          h4
+            i.fa.fa-smile-o

@@ -37,6 +37,9 @@ Dishes.schema = new SimpleSchema
 	tags:
 		type: [String]
 		optional: true
+	options:
+		type: [String]
+		optional: true
 
 Dishes.attachSchema Dishes.schema
 
@@ -48,6 +51,7 @@ Dishes.publicFields =
 	stock: 1
 	picture: 1
 	tags: 1
+	options: 1
 
 Dishes.helpers
 	

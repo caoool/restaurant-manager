@@ -11,6 +11,7 @@ getFileContentAsBase64 = (file, callback) ->
 
 Template.waiter.onCreated ->
   self = this
+  # @subscribe 'orders', tableId: Session.get 'TABLE_SELECTED' 
   self.autorun ->
     self.subscribe 'dishes.all'
     $('.waiter .dishes').isotope
@@ -50,6 +51,49 @@ Template.waiter.events
       filtered.add '.' + e.currentTarget.text
       $('.dishes').isotope filter: setToString filtered
 
+  'click .waiter .add_dish': (e) ->
+    e.preventDefault()
+    options_dish = ''
+    query = '.option[dishId="' + @_id + '"]:checked'
+    $.each $(query), ->
+      options_dish += $(this).val() + ' '
+    options_dish = options_dish.replace /\s+$/, ''
+    options_dish = '' if !options_dish
+    dish = Dishes.findOne @_id
+    order = Orders.findOne
+      'dishes.name': dish.name
+      'dishes.options': options_dish
+    if order
+      options =
+        orderId: 
+          _id: order._id
+          dishes:
+            $elemMatch:
+              name: dish.name
+              options: options_dish
+        updates: $inc: 'dishes.$.count': 1
+      console.log options
+      Meteor.call 'orders.update', options, (error, result) ->
+        if error
+          Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+        else
+          Materialize.toast('菜品数量更新成功!', 3000, 'rounded teal lighten-2')
+    else
+      dishToAdd =
+        name: dish.name
+        price: dish.price
+        unit: dish.unit
+        count: 1
+        options: options_dish
+      options =
+        orderId: Orders.findOne()._id
+        updates: $push: dishes: dishToAdd
+      Meteor.call 'orders.update', options, (error, result) ->
+        if error
+          Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+        else
+          Materialize.toast('菜品添加成功!', 3000, 'rounded teal lighten-2')
+
 Template.waiter.helpers
   dishes: ->
     Dishes.find()
@@ -62,4 +106,7 @@ Template.waiter.helpers
         for tag in dish.tags
           tags.add tag
     Array.from tags
+
+  order: ->
+    Orders.findOne()
       

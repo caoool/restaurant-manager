@@ -77,8 +77,16 @@ template(name='cashier')
                 tbody
                   each dishes
                     tr
-                      td #{name}
-                      td #{count}
+                      td 
+                        a.remove_dish(href='#', dish_name='#{name}', dish_options='#{options}').left x
+                        span #{name}
+                        if options
+                          br
+                          small #{options}
+                      td 
+                        a.remove_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') -
+                        span #{count}
+                        a.add_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') + 
                       td #{price}
                   .section
                   tr

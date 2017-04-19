@@ -17,21 +17,32 @@ Template.admin_dishes.onCreated ->
 		if self.subscriptionsReady()
 			Materialize.updateTextFields()
 
-			datas = {}
+			tags = {}
+			options = {}
 			autocompleteData = {}
 			dishes = Dishes.find().fetch()
 			for dish in dishes
-				data = []
+				data_tag = []
+				data_option = []
 				if dish.tags
 					for tag in dish.tags
-						data.push tag: tag
-						autocompleteData[tag] = null
-				datas[dish._id] = data
+						data_tag.push tag: tag
+						# autocompleteData[tag] = null
+				if dish.options
+					for option in dish.options
+						data_option.push tag: option
+				tags[dish._id] = data_tag
+				options[dish._id] = data_option
 			for dish in dishes
 				$(".admin_dishes .tags[dishId='"+dish._id+"']").material_chip
 					placeholder: '  +类别'
 					secondaryPlaceholder: '请输入类别'
-					data: datas[dish._id]
+					data: tags[dish._id]
+					# autocompleteData: autocompleteData
+				$(".admin_dishes .options[dishId='"+dish._id+"']").material_chip
+					placeholder: '  +选项'
+					secondaryPlaceholder: '请输入选项'
+					data: options[dish._id]
 					# autocompleteData: autocompleteData
 			
 			$('.admin_dishes .dishes').isotope
@@ -179,6 +190,34 @@ Template.admin_dishes.events
 		options =
 			dishId: @_id
 			tags: tags
+		Meteor.call 'dishes.update', options, (error, result) ->
+			if error
+				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+			else
+				$('.admin_dishes .dishes').isotope('reloadItems').isotope()
+				Materialize.toast('菜品类型更新成功!', 3000, 'rounded teal lighten-2')
+
+	'chip.add .admin_dishes .options': (e) ->
+		options_dish = []
+		for option in $(e.target).material_chip 'data'
+			options_dish.push option.tag
+		options =
+			dishId: @_id
+			options: options_dish
+		Meteor.call 'dishes.update', options, (error, result) ->
+			if error
+				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+			else
+				$('.admin_dishes .dishes').isotope('reloadItems').isotope()
+				Materialize.toast('菜品选项更新成功!', 3000, 'rounded teal lighten-2')
+
+	'chip.delete .admin_dishes .options': (e) ->
+		options_dish = []
+		for option in $(e.target).material_chip 'data'
+			options_dish.push option.tag
+		options =
+			dishId: @_id
+			options: options_dish
 		Meteor.call 'dishes.update', options, (error, result) ->
 			if error
 				Materialize.toast(error.reason, 3000, 'rounded red lighten-2')

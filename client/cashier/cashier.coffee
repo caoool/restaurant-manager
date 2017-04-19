@@ -64,6 +64,80 @@ Template.cashier.events
           else
             Materialize.toast('结账成功!', 3000, 'rounded teal lighten-2')
 
+  'click .cashier .remove_dish': (e) ->
+    e.preventDefault()
+    dish = Dishes.findOne @_id
+    dishToRemove =
+      name: e.target.getAttribute 'dish_name'
+      options: e.target.getAttribute 'dish_options'
+    options =
+      orderId: Orders.findOne()._id
+      updates: $pull: dishes: dishToRemove
+    Meteor.call 'orders.update', options, (error, result) ->
+      if error
+        Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+      else
+        Materialize.toast('菜品删除成功!', 3000, 'rounded teal lighten-2')
+
+  'click .cashier .add_dish_count': (e) ->
+    e.preventDefault()
+    dishName = e.target.getAttribute 'dish_name'
+    dishOptions = e.target.getAttribute 'dish_options'
+    dishOptions = '' if !dishOptions
+    dishCount = Number(e.target.getAttribute('dish_count')) + 1
+    options =
+      orderId: 
+        _id: Orders.findOne()._id
+        dishes:
+          $elemMatch:
+            name: dishName
+            options: dishOptions
+      updates: $set: 'dishes.$.count': dishCount
+    Meteor.call 'orders.update', options, (error, result) ->
+      if error
+        Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+      else
+        Materialize.toast('菜品数量更新成功!', 3000, 'rounded teal lighten-2')
+
+  'click .cashier .remove_dish_count': (e) ->
+    e.preventDefault()
+    dish = Dishes.findOne @_id
+    dishName = e.target.getAttribute 'dish_name'
+    dishOptions = e.target.getAttribute 'dish_options'
+    dishOptions = '' if !dishOptions
+    dishCount = Number(e.target.getAttribute('dish_count')) - 1
+    if dishCount <= 0
+      dishToRemove =
+        name: dishName
+        options: dishOptions
+      options =
+        orderId:
+          _id: Orders.findOne()._id
+          dishes:
+            $elemMatch:
+              name: dishName
+              options: dishOptions
+        updates: $pull: dishes: dishToRemove
+      Meteor.call 'orders.update', options, (error, result) ->
+        if error
+          Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+        else
+          Materialize.toast('菜品删除成功!', 3000, 'rounded teal lighten-2')
+    else
+      options =
+        orderId: 
+          _id: Orders.findOne()._id
+          dishes:
+            $elemMatch:
+              name: dishName
+              options: dishOptions
+        updates: $set: 'dishes.$.count': dishCount
+      Meteor.call 'orders.update', options, (error, result) ->
+        if error
+          Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+        else
+          Materialize.toast('菜品数量更新成功!', 3000, 'rounded teal lighten-2')
+
 Template.cashier.helpers
   tables: ->
     Tables.find()

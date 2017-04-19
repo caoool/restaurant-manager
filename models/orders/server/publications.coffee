@@ -3,7 +3,7 @@ Meteor.publish 'orders.all', ->
   Orders.find {},
     fields: Orders.publicFields
 
-Meteor.publish 'order', (options) ->
+Meteor.publish 'orders', (options) ->
   return @ready() if !@userId
   Orders.find options,
     fields: Orders.publicFields

@@ -57,15 +57,12 @@ Orders.schema = new SimpleSchema
     type: String
   'dishes.$.count':
     type: Number
+  'dishes.$.options':
+    type: String
+    optional: true
   total:
     type: Number
-    autoValue: ->
-      dishes = @field('dishes').value
-      total = 0
-      if dishes
-        for dish in dishes
-          total += dish.price * dish.count
-      total
+    defaultValue: 0
     optional: true
 
 Orders.attachSchema Orders.schema

@@ -17,14 +17,17 @@ template(name='waiter')
                   img(src='../food-place-holder.jpg')
                 span.card-title #{name}
                 if stock
-                  a.btn-floating.halfway-fab.waves-effect.waves-light.btn-large
+                  a.add_dish.btn-floating.halfway-fab.waves-effect.waves-light.btn-large
                     i.material-icons add
                 else
-                  a.btn-floating.halfway-fab.waves-effect.waves-light.btn-large.grey.disabled
-                    i.material-icons add
+                  a.btn-floating.halfway-fab.waves-effect.waves-light.btn-large.grey.disabled 售完
               .card-content
                 p #{description}
                 .section
+                each this.options
+                  span
+                    input.option(type='checkbox', value='#{this}', id='#{this}', dishId='#{../_id}')
+                    label(for='#{this}') #{this}
                 hr
                 p.right #{price} 元 / #{unit}
                 .section
