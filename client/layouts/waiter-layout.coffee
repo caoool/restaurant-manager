@@ -103,6 +103,37 @@ Template.waiter_layout.events
         else
           Materialize.toast('菜品数量更新成功!', 3000, 'rounded teal lighten-2')
 
+  'click .waiter_layout #confirm': (e) ->
+    e.preventDefault()
+    options =
+      orderId:
+        _id: Orders.findOne()._id
+      updates: $set: ready: true
+    Meteor.call 'orders.update', options, (error, result) ->
+      if error
+        Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+      else
+        Materialize.toast('下单成功，开始烹饪!', 3000, 'rounded teal lighten-2')
+
+  'click .waiter_layout .finish': (e) ->
+    e.preventDefault()
+    dishName = e.target.getAttribute 'dish_name'
+    dishOptions = e.target.getAttribute 'dish_options'
+    dishOptions = '' if !dishOptions
+    options =
+      orderId:
+        _id: Orders.findOne._id
+        dishes:
+          $elemMatch:
+            name: dishName
+            options: dishOptions
+      updates: $set: 'dishes.$.status': 'finished'
+    Meteor.call 'orders.update', options, (error, result) ->
+      if error
+        Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
+      else
+        Materialize.toast('菜品已送达!', 3000, 'rounded teal lighten-2')
+
 Template.waiter_layout.helpers
   tables: ->
     Tables.find()

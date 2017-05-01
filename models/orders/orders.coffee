@@ -60,6 +60,12 @@ Orders.schema = new SimpleSchema
   'dishes.$.options':
     type: String
     optional: true
+  'dishes.$.time':
+    type: Date
+    optional: true
+  'dishes.$.status':
+    type: String
+    optional: true
   total:
     type: Number
     defaultValue: 0
@@ -71,6 +77,10 @@ Orders.schema = new SimpleSchema
   method:
     type: String
     optional: true
+  ready:
+    type: Boolean
+    optional: true
+    defaultValue: false
 
 Orders.attachSchema Orders.schema
 OrdersStored.attachSchema Orders.schema
@@ -86,4 +96,5 @@ Orders.publicFields =
   total: 1
   actual: 1
   method: 1
+  ready: 1
 OrdersStored.publicFields = Orders.publicFields

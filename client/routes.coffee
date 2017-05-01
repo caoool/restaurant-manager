@@ -36,6 +36,10 @@ Router.route '/cashier',
 	layoutTemplate: 'cashier_layout'
 	authorizations: ['admin', 'cashier']
 
+Router.route '/kitchen',
+	name: 'kitchen'
+	template: 'kitchen'
+
 Router.route '/admin',
 	name: 'admin'
 	template: 'admin_dishes'

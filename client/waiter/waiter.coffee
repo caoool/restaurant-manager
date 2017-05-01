@@ -61,8 +61,10 @@ Template.waiter.events
     options_dish = '' if !options_dish
     dish = Dishes.findOne @_id
     order = Orders.findOne
-      'dishes.name': dish.name
-      'dishes.options': options_dish
+      dishes:
+        $elemMatch:
+          name: dish.name
+          options: options_dish
     if order
       options =
         orderId: 
@@ -85,6 +87,8 @@ Template.waiter.events
         unit: dish.unit
         count: 1
         options: options_dish
+        time: new Date()
+        status: 'waiting'
       options =
         orderId: Orders.findOne()._id
         updates: $push: dishes: dishToAdd

@@ -1,0 +1,53 @@
+template(name='kitchen')
+  .kitchen
+    .row
+      .col.s12
+        ul.tabs.tabs-fixed-width
+          li.tab
+            a(href='#waiting') 等待烹饪
+          li.tab
+            a(href='#delivering') 等待送桌
+    .section
+    #waiting
+      .row
+        .col.s12
+          table.bordered
+            thead
+              tr
+            tbody
+              each dishes_to_cook
+                tr
+                  td
+                    if $eq status 'waiting'
+                      a.cook(href='#').btn.btn-floating.btn-large 开始
+                    if $eq status 'cooking'
+                      a.finish(href='#').btn.btn-floating.btn-large.orange 完成
+                  td
+                    h5 台号：#{tableName}
+                  td
+                    h5 #{count} 份
+                  td
+                    h4 #{name}
+                  td
+                    span #{options}
+    #delivering
+      .row
+        .col.s12
+          table.bordered
+            thead
+              tr
+            tbody
+              each dishes_to_deliver
+                tr
+                  td
+                    a.revert(href='#').btn.btn-floating.btn-large.red 撤回
+                  td
+                    h5 台号：#{tableName}
+                  td
+                    h5 服务生：#{waiterName}
+                  td
+                    h5 #{count} 份
+                  td
+                    h4 #{name}
+                  td
+                    span #{options}

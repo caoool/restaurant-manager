@@ -39,33 +39,50 @@ template(name='waiter_layout')
       .order
         if order
           with order
-            h5.right 循环牛餐厅
-            p 台号:  #{tableName}
-            p 服务员:  #123
-            p 时间日期: #{createdAt}
-            .section
+            if ready
+              a.btn.btn-flat.btn-large.lightgrey 已下单
+            else
+              a#confirm.btn.btn-large.btn-floating.btn-large 下单
             table.centered.highlight
               thead
                 tr
-                  th 菜名
-                  th 数量
-                  th 单价
+                  th
+                  th 
+                    h4 菜名
+                  th 
+                    h4 数量
+                  th 
+                    h4 单价
               tbody
                 each dishes
                   tr
-                    td 
-                      a.remove_dish(href='#', dish_name='#{name}', dish_options='#{options}').left x
-                      span #{name}
+                    td
+                      if $eq status 'waiting'
+                        a(href='#', dish_name='#{name}', dish_options='#{options}').btn.btn-large
+                          i.fa.fa-circle-o-notch  准备中
+                      if $eq status 'cooking'
+                        a(href='#', dish_name='#{name}', dish_options='#{options}').btn.btn-large.orange
+                          i.fa.fa-fire  制作中
+                      if $eq status 'delivering'
+                        a.finish(href='#', dish_name='#{name}', dish_options='#{options}').btn.btn-large.green
+                          i.fa.fa-circle-o  送达中
+                      if $eq status 'finished'
+                        a.btn.btn-large.green
+                          i.fa.fa-check-circle-o  已送达
+                    td
+                      //- a.remove_dish.btn.btn-floating.btn-large.red(href='#', dish_name='#{name}', dish_options='#{options}') 删除
+                      h4 #{name}
                       if options
-                        br
-                        small #{options}
+                        p #{options}
                     td 
                       a.remove_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') -
-                      span #{count}
+                      h5 #{count}
                       a.add_dish_count(href='#', dish_name='#{name}', dish_count='#{count}', dish_options='#{options}') + 
-                    td #{price}
+                    td 
+                      h4 #{price}
                 .section
                 tr
+                  td -
                   td -
                   td -
                   td
