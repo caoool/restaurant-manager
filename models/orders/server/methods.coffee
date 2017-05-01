@@ -19,7 +19,11 @@ Meteor.methods
           total += dish.price * dish.count
         Orders.update options.orderId, $set: total: total
 
-  'orders.store': (tableId) ->
+  'orders.store': (options) ->
     return if !@userId
-    OrdersStored.insert Orders.findOne tableId: tableId
-    Orders.remove tableId: tableId
+    Orders.update tableId: options.tableId,
+      $set:
+        actual: options.actual
+        method: options.method
+    OrdersStored.insert Orders.findOne tableId: options.tableId
+    Orders.remove tableId: options.tableId

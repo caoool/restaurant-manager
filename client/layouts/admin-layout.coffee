@@ -42,6 +42,11 @@ Template.admin_layout.events
 		Session.setPersistent('SELECTED_TAB', 'staff')
 		Router.go '/admin/staff'
 
+	'click .admin_layout #account': (e) ->
+		e.preventDefault()
+		Session.setPersistent('SELECTED_TAB', 'account')
+		Router.go '/admin/account'
+
 	'click .admin_layout #settings': (e) ->
 		e.preventDefault()
 		Session.setPersistent('SELECTED_TAB', 'settings')

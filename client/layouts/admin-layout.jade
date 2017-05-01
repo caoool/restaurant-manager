@@ -38,6 +38,11 @@ template(name='admin_layout')
 							else
 								a#staff(href='#') 人员
 						li.tab
+							if $.Session.equals 'SELECTED_TAB' 'account'
+								a#account.active(href='#') 账目
+							else
+								a#account(href='#') 账目
+						li.tab
 							if $.Session.equals 'SELECTED_TAB' 'settings'
 								a#settings.active(href='#')
 									i.fa.fa-cog.fa-lg

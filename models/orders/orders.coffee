@@ -64,6 +64,13 @@ Orders.schema = new SimpleSchema
     type: Number
     defaultValue: 0
     optional: true
+  actual:
+    type: Number
+    defaultValue: 0
+    optional: true
+  method:
+    type: String
+    optional: true
 
 Orders.attachSchema Orders.schema
 OrdersStored.attachSchema Orders.schema
@@ -77,4 +84,6 @@ Orders.publicFields =
   checkedAt: 1
   dishes: 1
   total: 1
+  actual: 1
+  method: 1
 OrdersStored.publicFields = Orders.publicFields

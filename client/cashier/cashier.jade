@@ -99,3 +99,37 @@ template(name='cashier')
           else
             h4
               i.fa.fa-smile-o
+    #check_modal.modal
+      with order
+        .modal-content
+          h4 账目明细
+          .section
+          h5 款项
+          br
+          .row
+            .col.s12.m6
+              input#total.disabled(type='number', value='#{total}')
+              label(for='total') 应收
+            .col.s12.m6
+              input#actual(type='number', value='#{total}')
+              label(for='actual') 实收
+          .section
+          h5 结账方式
+          hr
+          p
+            input#method_cash(name='method', type='radio', value='cash', checked='checked')
+            label(for='method_cash') 现金
+          p
+            input#method_pos(name='method', type='radio', value='pos')
+            label(for='method_pos') POS机
+          p
+            input#method_alipay(name='method', type='radio', value='alipay')
+            label(for='method_alipay') 支付宝
+          p
+            input#method_weixin(name='method', type='radio', value='weixin')
+            label(for='method_weixin') 微信支付
+          hr
+          .section
+        .modal-footer
+          a#check_confirm.modal-action.waves-effect.waves-light.btn 确认
+          a.modal-action.modal-close.waves-effect.waves-light.btn.salmon 取消

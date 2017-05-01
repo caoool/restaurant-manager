@@ -60,6 +60,12 @@ Router.route '/admin/staff',
 	layoutTemplate: 'admin_layout'
 	authorizations: ['admin']
 
+Router.route '/admin/account',
+	name: 'admin_account'
+	template: 'admin_account'
+	layoutTemplate: 'admin_layout'
+	authorizations: ['admin']
+
 Router.route '/unauthorized',
 	name: 'unauthorized'
 	template: 'unauthorized'

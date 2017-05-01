@@ -3,6 +3,8 @@ Template.cashier.onCreated ->
   @subscribe 'orders.all'
 
 Template.cashier.onRendered ->
+  $('.cashier #check_modal').modal
+    dismissible: false
 
 Template.cashier.events
   'click .table': (e) ->
@@ -47,13 +49,19 @@ Template.cashier.events
 
   'click .check': (e) ->
     e.preventDefault()
+    $('.cashier #check_modal').modal 'open'
+
+  'click .cashier #check_confirm': (e) ->
+    e.preventDefault()
     options_table =
       tableId: Session.get 'TABLE_SELECTED'
       updates:
         reserved: false
         occupied: false
     options_order =
-      tableId = Session.get 'TABLE_SELECTED'
+      tableId: Session.get 'TABLE_SELECTED'
+      actual: $('.cashier #actual').val()
+      method: $('.cashier input[name=method]:checked').val()
     Meteor.call 'orders.store', options_order, (error, result) ->
       if error
         Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
@@ -63,6 +71,7 @@ Template.cashier.events
             Materialize.toast(error.reason, 3000, 'rounded red lighten-2')
           else
             Materialize.toast('结账成功!', 3000, 'rounded teal lighten-2')
+            $('.cashier #check_modal').modal 'close'
 
   'click .cashier .remove_dish': (e) ->
     e.preventDefault()

@@ -1,0 +1,36 @@
+template(name='admin_account')
+  .admin_account
+    .row
+      .col.s12.m6
+        input#start.datepicker(type='date', placeholder='请输入开始日期')
+        label(for='start') 开始
+      .col.s12.m6
+        input#end.datepicker(type='date', placeholder='请输入截止日期')
+        label(for='end') 截止
+      //- .col.s12.m2
+      //-   a#search.btn.btn-large.waves-effect.waves-light(href='#') 查询
+      .col.s12
+        .section
+        table.striped
+          thead
+            tr
+              th 桌号
+              th 服务生
+              th 支付方式
+              th 应收
+              th 实收
+          tbody
+            each orders
+              tr
+                td #{tableName}
+                td #{waiterName}
+                td #{method}
+                td #{total}
+                td #{actual}
+            .section
+            tr
+              th
+              th
+              th 共计
+              th #{sum_total}
+              th #{sum_actual}
